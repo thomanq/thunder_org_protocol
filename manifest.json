@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "Thunder Org Protocol",
+  "version": "1.0",
+  "description": "A Thunderbird extension to open org-protocol URLs.",
+  "applications": {
+    "gecko": {
+      "id": "thunder-org-protocol@anq.fr",
+      "strict_min_version": "148.0"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["messagesRead", "activeTab", "storage"],
+  "message_display_action": {
+    "default_title": "To Org",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "64": "icons/icon-64.png"
+    }
+  }
+}
