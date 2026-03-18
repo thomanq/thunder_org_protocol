@@ -31,5 +31,13 @@ browser.messageDisplayAction.onClicked.addListener(async (tab) => {
     }
     const urlParamsString = urlParams.join("&");
     const url = `org-protocol://${protocol}?${urlParamsString}`;
-    browser.tabs.create({ url });
+    browser.tabs.create({ url }, (tab) => {
+        const listener = (tabId, changeInfo) => {
+            if (tabId === tab.id && changeInfo.status === 'complete') {
+                browser.tabs.remove(tab.id);
+                browser.tabs.onUpdated.removeListener(listener);
+            }
+        };
+        browser.tabs.onUpdated.addListener(listener);
+    });
 });
