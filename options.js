@@ -23,8 +23,19 @@ function createParamElement(param, savedValue = "custom", savedCustomValue = "")
     input.style.display = savedValue === "custom" ? "inline" : "none";
     input.value = savedCustomValue;
 
+    const placeholder = document.createElement("div");
+    placeholder.style.display = savedValue === "custom" ? "none" : "inline-block";
+    placeholder.style.width = "100%";
+    placeholder.style.height = "34px";
+
     select.addEventListener("change", () => {
-        input.style.display = select.value === "custom" ? "inline" : "none";
+        if (select.value === "custom") {
+            input.style.display = "inline";
+            placeholder.style.display = "none";
+        } else {
+            input.style.display = "none";
+            placeholder.style.display = "inline-block";
+        }
     });
 
     const deleteButton = document.createElement("button");
@@ -36,7 +47,13 @@ function createParamElement(param, savedValue = "custom", savedCustomValue = "")
     div.appendChild(label);
     div.appendChild(select);
     div.appendChild(input);
+    div.appendChild(placeholder);
     div.appendChild(deleteButton);
+
+    // Ensure delete button is always in column 4
+    div.style.display = "grid";
+    div.style.gridTemplateColumns = "1fr 1fr 2fr auto";
+    div.style.alignItems = "center";
 
     return div;
 }
