@@ -62,6 +62,7 @@ document.getElementById("add-param").addEventListener("click", () => {
     const param = prompt("Enter parameter name:");
     if (param) {
         document.getElementById("params").appendChild(createParamElement(param));
+        updatePreviewURL();
     }
 });
 
@@ -82,6 +83,31 @@ document.getElementById("save").addEventListener("click", async () => {
     alert("Settings saved!");
 });
 
+function updatePreviewURL() {
+    const protocol = document.getElementById("protocol").value || "capture";
+    const params = [];
+
+    document.querySelectorAll(".param").forEach(div => {
+        const select = div.querySelector("select");
+        const input = div.querySelector("input");
+        const key = select.id;
+        const value = select.value === "custom" ? input.value : select.value;
+        params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    });
+
+    const url = `org-protocol://${protocol}?${params.join("&")}`;
+    document.getElementById("preview-url").textContent = url;
+}
+
+document.getElementById("protocol").addEventListener("input", updatePreviewURL);
+document.getElementById("params").addEventListener("input", updatePreviewURL);
+document.getElementById("params").addEventListener("change", updatePreviewURL);
+document.getElementById("params").addEventListener("click", (event) => {
+    if (event.target.tagName === "BUTTON" && event.target.textContent === "Delete") {
+        updatePreviewURL();
+    }
+});
+
 (async () => {
     const settings = await browser.storage.local.get();
     document.getElementById("protocol").value = settings.protocol || "capture";
@@ -92,4 +118,6 @@ document.getElementById("save").addEventListener("click", async () => {
         const savedCustomValue = savedParams[param + "_custom"] || "";
         document.getElementById("params").appendChild(createParamElement(param, savedValue, savedCustomValue));
     });
+
+    updatePreviewURL();
 })();

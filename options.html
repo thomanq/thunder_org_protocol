@@ -134,6 +134,19 @@
     #save:active {
       background-color: #1e8449;
     }
+
+    #preview-container {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+    }
+
+    #preview-url {
+      word-wrap: break-word;
+      color: #555;
+    }
   </style>
 </head>
 
@@ -149,6 +162,10 @@
     </div>
     <button id="add-param">Add Parameter</button>
     <button id="save">Save</button>
+    <div id="preview-container">
+      <strong>Preview URL:</strong>
+      <p id="preview-url">org-protocol://</p>
+    </div>
   </div>
 
   <script type="module" src="options.js"></script>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Thunder Org Protocol",
-  "version": "1.0",
+  "version": "1.1",
   "description": "A Thunderbird extension to open org-protocol URLs.",
   "applications": {
     "gecko": {
