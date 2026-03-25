@@ -91,7 +91,7 @@ function updatePreviewURL() {
         const select = div.querySelector("select");
         const input = div.querySelector("input");
         const key = select.id;
-        const value = select.value === "custom" ? input.value : select.value;
+        const value = select.value === "custom" ? input.value : select.value.toUpperCase();
         params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
     });
 
