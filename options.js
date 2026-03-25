@@ -112,12 +112,22 @@ document.getElementById("params").addEventListener("click", (event) => {
     const settings = await browser.storage.local.get();
     document.getElementById("protocol").value = settings.protocol || "capture";
 
-    const savedParams = settings.params || {};
-    defaultParams.forEach(param => {
-        const savedValue = savedParams[param] || "custom";
-        const savedCustomValue = savedParams[param + "_custom"] || "";
-        document.getElementById("params").appendChild(createParamElement(param, savedValue, savedCustomValue));
-    });
+    const paramsContainer = document.getElementById("params");
+    const savedParams = settings.params;
+
+    if (savedParams && Object.keys(savedParams).length > 0) {
+        const paramNames = Object.keys(savedParams).filter(key => !key.endsWith("_custom"));
+
+        paramNames.forEach(param => {
+            const savedValue = savedParams[param];
+            const savedCustomValue = savedParams[param + "_custom"] || "";
+            paramsContainer.appendChild(createParamElement(param, savedValue, savedCustomValue));
+        });
+    } else {
+        defaultParams.forEach(param => {
+            paramsContainer.appendChild(createParamElement(param, "custom", ""));
+        });
+    }
 
     updatePreviewURL();
 })();
