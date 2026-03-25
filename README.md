@@ -2,6 +2,8 @@
 
 A Thunderbird extension to open org-protocol URLs.
 
+![](./assets/summary.png)
+
 ## Instructions
 
 Set up org-protocol:
